@@ -1,0 +1,19 @@
+{
+  "name": "cloverleaf",
+  "version": "0.1.0",
+  "description": "Redux on the back-end... sort of. A model framework based on the Flux design pattern. Designed to work with Turnpike.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jay-depot/cloverleaf.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jay-depot/cloverleaf/issues"
+  },
+  "homepage": "https://github.com/jay-depot/cloverleaf#readme"
+}
