@@ -4,7 +4,7 @@
   "description": "Redux on the back-end... sort of. A model framework based on the Flux design pattern. Designed to work with Turnpike.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/jay-depot/cloverleaf/issues"
   },
-  "homepage": "https://github.com/jay-depot/cloverleaf#readme"
+  "homepage": "https://github.com/jay-depot/cloverleaf#readme",
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "should": "^13.2.3"
+  }
 }
