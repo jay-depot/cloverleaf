@@ -1,3 +1,5 @@
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjay-depot%2Fcloverleaf.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjay-depot%2Fcloverleaf?ref=badge_shield)
+
 Cloverleaf
 ==========
 
@@ -9,3 +11,7 @@ that snapshot, which will be parsed by a series of reducers before the final sta
 discarded or committed to the backing store
 
 Designed to work with Turnpike.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjay-depot%2Fcloverleaf.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjay-depot%2Fcloverleaf?ref=badge_large)
