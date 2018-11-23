@@ -1,17 +1,29 @@
 describe('cloverleaf.createReducer()', () => {
   it('should accept any number of parameters');
   it('should accept a function or an array of functions in each parameter');
-  it('should throw if any parameter is not a function or an array of functions');
+  it(
+    'should throw if any parameter is not a function or an array of functions'
+  );
   it('should return a function');
 
   describe('the returned function', () => {
-    it('should call all functions passed to cloverleaf.createReducer() in the order given');
-    it('should pass the result of each function into the first parameter of next function');
-    it('should pass the second parameter into the second parameter of next function');
-    it('should return a promise that resolves to the result of the last function called');
+    it(
+      'should call all functions passed to cloverleaf.createReducer() in the order given'
+    );
+    it(
+      'should pass the result of each function into the first parameter of next function'
+    );
+    it(
+      'should pass the second parameter into the second parameter of next function'
+    );
+    it(
+      'should return a promise that resolves to the result of the last function called'
+    );
 
     context('a function in the chain returns a promise', () => {
-      it('should wait for the promise to resolve before calling the next function');
+      it(
+        'should wait for the promise to resolve before calling the next function'
+      );
     });
 
     describe('failure conditions', () => {

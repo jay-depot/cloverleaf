@@ -4,7 +4,9 @@ describe('stateSnapshot.commitStateSnapshot', () => {
 
   context('backing store returns a promise that resolves', () => {
     it('should return a new, immutable, state snapshot');
-    it('should return a state snapshot matching the state as it existed at the time called');
+    it(
+      'should return a state snapshot matching the state as it existed at the time called'
+    );
   });
 
   context('backing store returns a promise that rejects', () => {
