@@ -6,7 +6,8 @@ describe('cloverleaf.createReducer()', () => {
 
   describe('the returned function', () => {
     it('should call all functions passed to cloverleaf.createReducer() in the order given');
-    it('should pass the result of each function into the next function');
+    it('should pass the result of each function into the first parameter of next function');
+    it('should pass the second parameter into the second parameter of next function');
     it('should return a promise that resolves to the result of the last function called');
 
     context('a function in the chain returns a promise', () => {
