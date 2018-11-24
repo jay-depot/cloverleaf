@@ -62,4 +62,47 @@ describe('stateSnapshot.dispatchToStateSnapshot()', () => {
 
     oldSnapshot.items.should.deepEqual({ itemType: [{ test: 'item' }] });
   });
+
+  it('should set the closed property on the existing state snapshot', async () => {
+    const mockBackingStore = {
+      selectItems: () => ({
+        results: { itemType: [{ test: 'item' }] },
+        meta: {},
+      }),
+    };
+    const store = cloverleaf.createStore(mockBackingStore);
+    const fakeReducer = (state, action) => action;
+    store.registerReducer(cloverleaf.createReducer(fakeReducer));
+    const oldSnapshot = await store.getStateSnapshotBySelector({
+      test: 'selector',
+    });
+    await oldSnapshot.dispatchToStateSnapshot({
+      reducer: 'reduced',
+    });
+
+    oldSnapshot.should.have.property('closed');
+    oldSnapshot.closed.should.equal(true);
+  });
+
+  it('should reject if the state snapshot is closed', async () => {
+    const mockBackingStore = {
+      selectItems: () => ({
+        results: { itemType: [{ test: 'item' }] },
+        meta: {},
+      }),
+    };
+    const store = cloverleaf.createStore(mockBackingStore);
+    const fakeReducer = (state, action) => action;
+    store.registerReducer(cloverleaf.createReducer(fakeReducer));
+    const oldSnapshot = await store.getStateSnapshotBySelector({
+      test: 'selector',
+    });
+    oldSnapshot.closed = true;
+
+    return oldSnapshot
+      .dispatchToStateSnapshot({
+        reducer: 'reduced',
+      })
+      .should.be.rejected();
+  });
 });

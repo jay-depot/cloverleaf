@@ -26,7 +26,7 @@ describe('stateSnapshot.discardStateSnapshot', () => {
 
   it('should return a new state snapshot', async () => {
     const mockBackingStore = {
-      discardChanges: sinon.spy(),
+      discardChanges() {},
       selectItems: () => ({
         results: { itemType: [{ test: 'item' }] },
         meta: {},
@@ -48,7 +48,7 @@ describe('stateSnapshot.discardStateSnapshot', () => {
 
   it('should return a state snapshot matching the original state', async () => {
     const mockBackingStore = {
-      discardChanges: sinon.spy(),
+      discardChanges() {},
       selectItems: () => ({
         results: { itemType: [{ test: 'item' }] },
         meta: {},
@@ -66,6 +66,43 @@ describe('stateSnapshot.discardStateSnapshot', () => {
     const revertedSnapshot = await reducedSnapshot.discardStateSnapshot();
 
     revertedSnapshot.items.should.deepEqual(originalSnapshot.items);
+  });
+
+  it('should set the closed property on the original state snapshot', async () => {
+    const mockBackingStore = {
+      discardChanges() {},
+      selectItems: () => ({
+        results: { itemType: [{ test: 'item' }] },
+        meta: {},
+      }),
+    };
+    const store = cloverleaf.createStore(mockBackingStore);
+    const fakeReducer = (state, action) => action;
+    store.registerReducer(cloverleaf.createReducer(fakeReducer));
+    const originalSnapshot = await store.getStateSnapshotBySelector({
+      test: 'selector',
+    });
+    await originalSnapshot.discardStateSnapshot();
+
+    originalSnapshot.should.have.property('closed');
+    originalSnapshot.closed.should.equal(true);
+  });
+
+  it('should reject if the state snapshot is closed', async () => {
+    const mockBackingStore = {
+      discardChanges() {},
+      selectItems: () => ({
+        results: { itemType: [{ test: 'item' }] },
+        meta: {},
+      }),
+    };
+    const store = cloverleaf.createStore(mockBackingStore);
+    const originalSnapshot = await store.getStateSnapshotBySelector({
+      test: 'selector',
+    });
+    originalSnapshot.closed = true;
+
+    return originalSnapshot.discardStateSnapshot().should.be.rejected();
   });
 
   context('backing store returns a promise that rejects', () => {
