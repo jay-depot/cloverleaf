@@ -4,9 +4,10 @@ const sinon = require('sinon');
 describe('stateSnapshot.dispatchToStateSnapshot()', () => {
   it('should call the reducer function registered to the store that created the state snapshot', async () => {
     const mockBackingStore = {
-      commit() {},
-      discard() {},
-      select: () => ({ results: { itemType: [{ test: 'item' }] }, meta: {} }),
+      selectItems: () => ({
+        results: { itemType: [{ test: 'item' }] },
+        meta: {},
+      }),
     };
     const store = cloverleaf.createStore(mockBackingStore);
     const fakeReducer = sinon.spy();
@@ -24,9 +25,10 @@ describe('stateSnapshot.dispatchToStateSnapshot()', () => {
 
   it('should return a new state snapshot matching the output of the reducer', async () => {
     const mockBackingStore = {
-      commit() {},
-      discard() {},
-      select: () => ({ results: { itemType: [{ test: 'item' }] }, meta: {} }),
+      selectItems: () => ({
+        results: { itemType: [{ test: 'item' }] },
+        meta: {},
+      }),
     };
     const store = cloverleaf.createStore(mockBackingStore);
     const fakeReducer = (state, action) => action;
@@ -43,9 +45,10 @@ describe('stateSnapshot.dispatchToStateSnapshot()', () => {
 
   it('should not chage the existing state snapshot', async () => {
     const mockBackingStore = {
-      commit() {},
-      discard() {},
-      select: () => ({ results: { itemType: [{ test: 'item' }] }, meta: {} }),
+      selectItems: () => ({
+        results: { itemType: [{ test: 'item' }] },
+        meta: {},
+      }),
     };
     const store = cloverleaf.createStore(mockBackingStore);
     const fakeReducer = (state, action) => action;

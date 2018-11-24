@@ -3,15 +3,20 @@ const cloverleaf = require('../../index');
 describe('store.getCleanStateSnapshot()', () => {
   let snapshot;
 
-  before(() => {
+  before(async () => {
     class DummyBackingStore extends cloverleaf.BackingStore {
-      commit() {}
-      discard() {}
-      select() {}
+      commitChanges() {}
+      discardChanges() {}
+      async newItems() {
+        return {
+          meta: {},
+        };
+      }
+      selectItems() {}
     }
 
     const store = cloverleaf.createStore(new DummyBackingStore());
-    snapshot = store.getCleanStateSnapshot();
+    snapshot = await store.getCleanStateSnapshot();
   });
 
   specify('resulting object must have property named items', () => {
@@ -21,6 +26,11 @@ describe('store.getCleanStateSnapshot()', () => {
   specify('items must be an empty object', () => {
     snapshot.items.should.be.an.Object();
     snapshot.items.should.be.empty();
+  });
+
+  specify('resulting object must have meta property', () => {
+    snapshot.should.have.property('meta');
+    snapshot.meta.should.be.an.Object();
   });
 
   [

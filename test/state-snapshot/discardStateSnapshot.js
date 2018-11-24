@@ -4,9 +4,11 @@ const sinon = require('sinon');
 describe('stateSnapshot.discardStateSnapshot', () => {
   it('should call the backing store discard method', async () => {
     const mockBackingStore = {
-      commit() {},
-      discard: sinon.spy(),
-      select: () => ({ results: { itemType: [{ test: 'item' }] }, meta: {} }),
+      discardChanges: sinon.spy(),
+      selectItems: () => ({
+        results: { itemType: [{ test: 'item' }] },
+        meta: {},
+      }),
     };
     const store = cloverleaf.createStore(mockBackingStore);
     const fakeReducer = (state, action) => action;
@@ -19,14 +21,16 @@ describe('stateSnapshot.discardStateSnapshot', () => {
     });
     await reducedSnapshot.discardStateSnapshot();
 
-    mockBackingStore.discard.should.be.called();
+    mockBackingStore.discardChanges.should.be.called();
   });
 
   it('should return a new state snapshot', async () => {
     const mockBackingStore = {
-      commit() {},
-      discard: sinon.spy(),
-      select: () => ({ results: { itemType: [{ test: 'item' }] }, meta: {} }),
+      discardChanges: sinon.spy(),
+      selectItems: () => ({
+        results: { itemType: [{ test: 'item' }] },
+        meta: {},
+      }),
     };
     const store = cloverleaf.createStore(mockBackingStore);
     const fakeReducer = (state, action) => action;
@@ -44,9 +48,11 @@ describe('stateSnapshot.discardStateSnapshot', () => {
 
   it('should return a state snapshot matching the original state', async () => {
     const mockBackingStore = {
-      commit() {},
-      discard: sinon.spy(),
-      select: () => ({ results: { itemType: [{ test: 'item' }] }, meta: {} }),
+      discardChanges: sinon.spy(),
+      selectItems: () => ({
+        results: { itemType: [{ test: 'item' }] },
+        meta: {},
+      }),
     };
     const store = cloverleaf.createStore(mockBackingStore);
     const fakeReducer = (state, action) => action;
@@ -65,9 +71,11 @@ describe('stateSnapshot.discardStateSnapshot', () => {
   context('backing store returns a promise that rejects', () => {
     it('should reject with the same error as the backing store', async () => {
       const mockBackingStore = {
-        commit() {},
-        discard: sinon.stub().rejects({ name: 'TestError' }),
-        select: () => ({ results: { itemType: [{ test: 'item' }] }, meta: {} }),
+        discardChanges: sinon.stub().rejects({ name: 'TestError' }),
+        selectItems: () => ({
+          results: { itemType: [{ test: 'item' }] },
+          meta: {},
+        }),
       };
       const store = cloverleaf.createStore(mockBackingStore);
       const fakeReducer = (state, action) => action;
