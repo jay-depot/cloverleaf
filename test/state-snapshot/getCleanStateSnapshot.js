@@ -23,6 +23,11 @@ describe('store.getCleanStateSnapshot()', () => {
     snapshot.items.should.be.empty();
   });
 
+  specify('resulting object must have meta property', () => {
+    snapshot.should.have.property('meta');
+    snapshot.meta.should.be.an.Object();
+  });
+
   [
     'dispatchToStateSnapshot',
     'commitStateSnapshot',
