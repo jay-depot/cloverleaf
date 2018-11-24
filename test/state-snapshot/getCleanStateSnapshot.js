@@ -5,9 +5,10 @@ describe('store.getCleanStateSnapshot()', () => {
 
   before(() => {
     class DummyBackingStore extends cloverleaf.BackingStore {
-      commit() {}
-      discard() {}
-      select() {}
+      commitChanges() {}
+      discardChanges() {}
+      newItems() {}
+      selectItems() {}
     }
 
     const store = cloverleaf.createStore(new DummyBackingStore());
