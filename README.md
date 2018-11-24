@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/jay-depot/cloverleaf.svg?branch=master)](https://travis-ci.org/jay-depot/cloverleaf)[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjay-depot%2Fcloverleaf.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjay-depot%2Fcloverleaf?ref=badge_shield)
+[![Build Status](https://travis-ci.org/jay-depot/cloverleaf.svg?branch=master)](https://travis-ci.org/jay-depot/cloverleaf) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjay-depot%2Fcloverleaf.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjay-depot%2Fcloverleaf?ref=badge_shield)
 
 # Cloverleaf
 
