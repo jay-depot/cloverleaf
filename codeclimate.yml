@@ -5,6 +5,3 @@ engines:
       languages:
         - javascript:
           mass_threshold: 80
-plugins:
-  eslint:
-    enabled: false
