@@ -3,15 +3,25 @@
   "extends": ["semistandard", "plugin:prettier/recommended"],
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": "error",
-    "curly": ["error", "all"],
     "brace-style": [
       "error",
       "1tbs",
       {
         "allowSingleLine": false
       }
-    ]
+    ],
+    "prettier/prettier": "error",
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "only-multiline",
+        "objects": "only-multiline",
+        "imports": "only-multiline",
+        "exports": "only-multiline",
+        "functions": "ignore"
+      }
+    ],
+    "curly": ["error", "all"]
   },
   "overrides": [
     {
