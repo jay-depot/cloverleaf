@@ -66,7 +66,7 @@ describe('stateSnapshot.discardStateSnapshot', () => {
     it('should reject with the same error as the backing store', async () => {
       const mockBackingStore = {
         commit() {},
-        discard: sinon.stub().rejects(),
+        discard: sinon.stub().rejects({ name: 'TestError' }),
         select: () => ({ results: { itemType: [{ test: 'item' }] }, meta: {} }),
       };
       const store = cloverleaf.createStore(mockBackingStore);
@@ -79,7 +79,9 @@ describe('stateSnapshot.discardStateSnapshot', () => {
         reducer: 'reduced',
       });
 
-      return reducedSnapshot.discardStateSnapshot().should.be.rejected();
+      return reducedSnapshot
+        .discardStateSnapshot()
+        .should.be.rejectedWith({ name: 'TestError' });
     });
   });
 });
