@@ -8,78 +8,144 @@ describe('cloverleaf.BackingStore', () => {
 
   context('when extended by another class', () => {
     describe('constructor', () => {
-      it('should throw if select method is not defined by child class', () => {
+      it('should throw if selectItems method is not defined by child class', () => {
         class DummyBackingStore extends cloverleaf.BackingStore {
-          commit() {}
-          discard() {}
+          commitChanges() {}
+          discardChanges() {}
+          newItems() {}
         }
-        should.throws(() => new DummyBackingStore());
+        should.throws(() => new DummyBackingStore(), function(err) {
+          return (
+            err.message === 'BackingStore instance must have selectItems method'
+          );
+        });
       });
 
-      it('should throw if property select is not a function in child class', () => {
+      it('should throw if property selectItems is not a function in child class', () => {
         class DummyBackingStore extends cloverleaf.BackingStore {
           constructor() {
             super();
-            this.select = true;
+            this.selectItems = true;
           }
-          commit() {}
-          discard() {}
+          commitChanges() {}
+          discardChanges() {}
+          newItems() {}
         }
-        should.throws(() => new DummyBackingStore());
+        should.throws(() => new DummyBackingStore(), function(err) {
+          return (
+            err.message === 'BackingStore instance must have selectItems method'
+          );
+        });
       });
 
-      it('should throw if commit method is not defined by child class', () => {
+      it('should throw if commitChanges method is not defined by child class', () => {
         class DummyBackingStore extends cloverleaf.BackingStore {
-          discard() {}
-          select() {}
+          discardChanges() {}
+          newItems() {}
+          selectItems() {}
         }
-        should.throws(() => new DummyBackingStore());
+        should.throws(() => new DummyBackingStore(), function(err) {
+          return (
+            err.message ===
+            'BackingStore instance must have commitChanges method'
+          );
+        });
       });
 
-      it('should throw if property commit is not a function in child class', () => {
+      it('should throw if property commitChanges is not a function in child class', () => {
         class DummyBackingStore extends cloverleaf.BackingStore {
           constructor() {
             super();
-            this.commit = true;
+            this.commitChanges = true;
           }
-          discard() {}
-          select() {}
+          discardChanges() {}
+          newItems() {}
+          selectItems() {}
         }
-        should.throws(() => new DummyBackingStore());
+        should.throws(() => new DummyBackingStore(), function(err) {
+          return (
+            err.message ===
+            'BackingStore instance must have commitChanges method'
+          );
+        });
       });
 
-      it('should throw if discard method is not defined by child class', () => {
+      it('should throw if discardChanges method is not defined by child class', () => {
         class DummyBackingStore extends cloverleaf.BackingStore {
-          commit() {}
-          select() {}
+          commitChanges() {}
+          newItems() {}
+          selectItems() {}
         }
-        should.throws(() => new DummyBackingStore());
+        should.throws(() => new DummyBackingStore(), function(err) {
+          return (
+            err.message ===
+            'BackingStore instance must have discardChanges method'
+          );
+        });
       });
 
       it('should throw if property discard is not a function in child class', () => {
         class DummyBackingStore extends cloverleaf.BackingStore {
           constructor() {
             super();
-            this.discard = true;
+            this.discardChanges = true;
           }
-          commit() {}
-          select() {}
+          commitChanges() {}
+          newItems() {}
+          selectItems() {}
         }
-        should.throws(() => new DummyBackingStore());
+        should.throws(() => new DummyBackingStore(), function(err) {
+          return (
+            err.message ===
+            'BackingStore instance must have discardChanges method'
+          );
+        });
+      });
+
+      it('should throw if newItems method is not defined by child class', () => {
+        class DummyBackingStore extends cloverleaf.BackingStore {
+          commitChanges() {}
+          discardChanges() {}
+          selectItems() {}
+        }
+        should.throws(() => new DummyBackingStore(), function(err) {
+          return (
+            err.message === 'BackingStore instance must have newItems method'
+          );
+        });
+      });
+
+      it('should throw if property newItems is not a function in child class', () => {
+        class DummyBackingStore extends cloverleaf.BackingStore {
+          constructor() {
+            super();
+            this.newItems = true;
+          }
+          commitChanges() {}
+          discardChanges() {}
+          selectItems() {}
+        }
+        should.throws(() => new DummyBackingStore(), function(err) {
+          return (
+            err.message === 'BackingStore instance must have newItems method'
+          );
+        });
       });
 
       it('should succeed if all required methods are defined in child class', () => {
         class DummyBackingStore extends cloverleaf.BackingStore {
-          commit() {}
-          discard() {}
-          select() {}
+          commitChanges() {}
+          discardChanges() {}
+          newItems() {}
+          selectItems() {}
         }
 
         const backingStore = new DummyBackingStore();
 
-        backingStore.commit.should.be.a.Function();
-        backingStore.discard.should.be.a.Function();
-        backingStore.select.should.be.a.Function();
+        backingStore.commitChanges.should.be.a.Function();
+        backingStore.discardChanges.should.be.a.Function();
+        backingStore.newItems.should.be.a.Function();
+        backingStore.selectItems.should.be.a.Function();
       });
     });
   });
