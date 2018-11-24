@@ -6,7 +6,7 @@ describe('stateSnapshot.dispatchToStateSnapshot()', () => {
     const mockBackingStore = {
       commit() {},
       discard() {},
-      select: () => ({ itemType: [{ test: 'item' }] }),
+      select: () => ({ results: { itemType: [{ test: 'item' }] }, meta: {} }),
     };
     const store = cloverleaf.createStore(mockBackingStore);
     const fakeReducer = sinon.spy();
@@ -26,7 +26,7 @@ describe('stateSnapshot.dispatchToStateSnapshot()', () => {
     const mockBackingStore = {
       commit() {},
       discard() {},
-      select: () => ({ itemType: [{ test: 'item' }] }),
+      select: () => ({ results: { itemType: [{ test: 'item' }] }, meta: {} }),
     };
     const store = cloverleaf.createStore(mockBackingStore);
     const fakeReducer = (state, action) => action;
@@ -45,7 +45,7 @@ describe('stateSnapshot.dispatchToStateSnapshot()', () => {
     const mockBackingStore = {
       commit() {},
       discard() {},
-      select: () => ({ itemType: [{ test: 'item' }] }),
+      select: () => ({ results: { itemType: [{ test: 'item' }] }, meta: {} }),
     };
     const store = cloverleaf.createStore(mockBackingStore);
     const fakeReducer = (state, action) => action;

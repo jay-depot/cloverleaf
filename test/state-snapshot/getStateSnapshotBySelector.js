@@ -20,7 +20,7 @@ describe('store.getStateSnapshotBySelector()', () => {
       const mockBackingStore = {
         commit() {},
         discard() {},
-        select: sinon.spy(),
+        select: sinon.stub().resolves({ results: {}, meta: {} }),
       };
       const store = cloverleaf.createStore(mockBackingStore);
       await store.getStateSnapshotBySelector({ test: 'selector' });
@@ -33,7 +33,7 @@ describe('store.getStateSnapshotBySelector()', () => {
         const mockBackingStore = {
           commit() {},
           discard() {},
-          select() {},
+          select: () => ({ results: {}, meta: {} }),
         };
         const store = cloverleaf.createStore(mockBackingStore);
         const selector = await store.getStateSnapshotBySelector({
@@ -49,11 +49,14 @@ describe('store.getStateSnapshotBySelector()', () => {
         commit() {},
         discard() {},
         select: async () => ({
-          itemType: [
-            { id: 1, test: 'selector' },
-            { id: 2, test: 'selector' },
-            { id: 3, test: 'selector' },
-          ],
+          results: {
+            itemType: [
+              { id: 1, test: 'selector' },
+              { id: 2, test: 'selector' },
+              { id: 3, test: 'selector' },
+            ],
+          },
+          meta: {},
         }),
       };
       const store = cloverleaf.createStore(mockBackingStore);
@@ -81,7 +84,10 @@ describe('store.getStateSnapshotBySelector()', () => {
           const mockBackingStore = {
             commit() {},
             discard() {},
-            select: sinon.spy(),
+            select: sinon.stub().resolves({
+              results: {},
+              meta: {},
+            }),
           };
           const store = cloverleaf.createStore(mockBackingStore);
           const snapshot = await store.getStateSnapshotBySelector({
