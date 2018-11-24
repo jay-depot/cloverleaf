@@ -68,6 +68,43 @@ describe('stateSnapshot.commitStateSnapshot', () => {
 
       committedSnapshot.items.should.deepEqual(reducedSnapshot.items);
     });
+
+    it('should set the closed property on the original state snapshot', async () => {
+      const mockBackingStore = {
+        commitChanges() {},
+        selectItems: () => ({
+          results: { itemType: [{ test: 'item' }] },
+          meta: {},
+        }),
+      };
+      const store = cloverleaf.createStore(mockBackingStore);
+      const fakeReducer = (state, action) => action;
+      store.registerReducer(cloverleaf.createReducer(fakeReducer));
+      const originalSnapshot = await store.getStateSnapshotBySelector({
+        test: 'selector',
+      });
+      await originalSnapshot.commitStateSnapshot();
+
+      originalSnapshot.should.have.property('closed');
+      originalSnapshot.closed.should.equal(true);
+    });
+  });
+
+  it('should reject if the state snapshot is closed', async () => {
+    const mockBackingStore = {
+      commitChanges() {},
+      selectItems: () => ({
+        results: { itemType: [{ test: 'item' }] },
+        meta: {},
+      }),
+    };
+    const store = cloverleaf.createStore(mockBackingStore);
+    const originalSnapshot = await store.getStateSnapshotBySelector({
+      test: 'selector',
+    });
+    originalSnapshot.closed = true;
+
+    return originalSnapshot.commitStateSnapshot().should.be.rejected();
   });
 
   context('backing store returns a promise that rejects', () => {
