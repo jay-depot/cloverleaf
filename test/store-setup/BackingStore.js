@@ -67,6 +67,20 @@ describe('cloverleaf.BackingStore', () => {
         }
         should.throws(() => new DummyBackingStore());
       });
+
+      it('should succeed if all required methods are defined in child class', () => {
+        class DummyBackingStore extends cloverleaf.BackingStore {
+          commit() {}
+          discard() {}
+          select() {}
+        }
+
+        const backingStore = new DummyBackingStore();
+
+        backingStore.commit.should.be.a.Function();
+        backingStore.discard.should.be.a.Function();
+        backingStore.select.should.be.a.Function();
+      });
     });
   });
 });
