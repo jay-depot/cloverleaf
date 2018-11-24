@@ -1,7 +1,36 @@
+const cloverleaf = require('../../index');
+
 describe('store.createCleanStateSnapshot()', () => {
-  specify('resulting object must have property named items');
-  specify('items must be an empty object');
-  specify('resulting object must have method named dispatchToStateSnapshot');
-  specify('resulting object must have method named commitStateSnapshot');
-  specify('resulting object must have method named discardStateSnapshot');
+  let snapshot;
+
+  before(() => {
+    class DummyBackingStore extends cloverleaf.BackingStore {
+      commit() {}
+      discard() {}
+      select() {}
+    }
+
+    const store = cloverleaf.createStore(new DummyBackingStore());
+    snapshot = store.getCleanStateSnapshot();
+  });
+
+  specify('resulting object must have property named items', () => {
+    snapshot.should.have.property('items');
+  });
+
+  specify('items must be an empty object', () => {
+    snapshot.items.should.be.an.Object();
+    snapshot.items.should.be.empty();
+  });
+
+  [
+    'dispatchToStateSnapshot',
+    'commitStateSnapshot',
+    'discardStateSnapshot',
+  ].forEach(requiredMethod =>
+    specify(`resulting object must have method named ${requiredMethod}`, () => {
+      snapshot.should.have.property(requiredMethod);
+      snapshot[requiredMethod].should.be.a.Function();
+    })
+  );
 });
