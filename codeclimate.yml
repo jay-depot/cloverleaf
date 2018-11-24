@@ -5,3 +5,7 @@ engines:
       languages:
         - javascript:
           mass_threshold: 80
+plugins:
+  eslint:
+    enabled: true
+    channel: 'eslint-5'
