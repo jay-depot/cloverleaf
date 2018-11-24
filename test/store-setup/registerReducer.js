@@ -3,9 +3,10 @@ const should = require('should');
 
 describe('store.registerReducer()', () => {
   class DummyBackingStore extends cloverleaf.BackingStore {
-    commit() {}
-    discard() {}
-    select() {}
+    commitChanges() {}
+    discardChanges() {}
+    newItems() {}
+    selectItems() {}
   }
 
   it('should return the store with reducer attached', () => {
