@@ -1,6 +1,6 @@
 const cloverleaf = require('../../index');
 
-describe('store.createCleanStateSnapshot()', () => {
+describe('store.getCleanStateSnapshot()', () => {
   let snapshot;
 
   before(() => {
