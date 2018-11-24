@@ -61,4 +61,25 @@ describe('stateSnapshot.discardStateSnapshot', () => {
 
     revertedSnapshot.items.should.deepEqual(originalSnapshot.items);
   });
+
+  context('backing store returns a promise that rejects', () => {
+    it('should reject with the same error as the backing store', async () => {
+      const mockBackingStore = {
+        commit() {},
+        discard: sinon.stub().rejects(),
+        select: () => ({ results: { itemType: [{ test: 'item' }] }, meta: {} }),
+      };
+      const store = cloverleaf.createStore(mockBackingStore);
+      const fakeReducer = (state, action) => action;
+      store.registerReducer(cloverleaf.createReducer(fakeReducer));
+      const originalSnapshot = await store.getStateSnapshotBySelector({
+        test: 'selector',
+      });
+      const reducedSnapshot = await originalSnapshot.dispatchToStateSnapshot({
+        reducer: 'reduced',
+      });
+
+      return reducedSnapshot.discardStateSnapshot().should.be.rejected();
+    });
+  });
 });
