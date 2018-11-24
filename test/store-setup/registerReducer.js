@@ -14,6 +14,7 @@ describe('store.registerReducer()', () => {
     store.should.have.property('reducer');
     store.reducer.should.be.a.Function();
   });
+
   it('should throw if called more than once', () => {
     const store = cloverleaf.createStore(new DummyBackingStore());
     should.doesNotThrow(() => store.registerReducer(() => {}));

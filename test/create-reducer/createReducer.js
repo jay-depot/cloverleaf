@@ -29,7 +29,7 @@ describe('cloverleaf.createReducer()', () => {
   });
 
   describe('the returned function', () => {
-    it('should the first function passed to cloverleaf.createReducer()', async () => {
+    it('should call the first function passed to cloverleaf.createReducer()', async () => {
       const spy = sinon.spy();
       const reduce = cloverleaf.createReducer([spy]);
 
