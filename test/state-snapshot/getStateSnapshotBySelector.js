@@ -5,9 +5,10 @@ describe('store.getStateSnapshotBySelector()', () => {
   context('when called without a selector', () => {
     it('rejects with an error', () => {
       class DummyBackingStore extends cloverleaf.BackingStore {
-        commit() {}
-        discard() {}
-        select() {}
+        commitChanges() {}
+        discardChanges() {}
+        newItems() {}
+        selectItems() {}
       }
       const store = cloverleaf.createStore(new DummyBackingStore());
 
@@ -18,22 +19,22 @@ describe('store.getStateSnapshotBySelector()', () => {
   context('when called with a selector', () => {
     it('passes the selector to the backing store', async () => {
       const mockBackingStore = {
-        commit() {},
-        discard() {},
-        select: sinon.stub().resolves({ results: {}, meta: {} }),
+        commitChanges() {},
+        discardChanges() {},
+        selectItems: sinon.stub().resolves({ results: {}, meta: {} }),
       };
       const store = cloverleaf.createStore(mockBackingStore);
       await store.getStateSnapshotBySelector({ test: 'selector' });
-      mockBackingStore.select.should.be.calledWith({ test: 'selector' });
+      mockBackingStore.selectItems.should.be.calledWith({ test: 'selector' });
     });
 
     specify(
       'state snapshot object must have property named items',
       async () => {
         const mockBackingStore = {
-          commit() {},
-          discard() {},
-          select: () => ({ results: {}, meta: {} }),
+          commitChanges() {},
+          discardChanges() {},
+          selectItems: () => ({ results: {}, meta: {} }),
         };
         const store = cloverleaf.createStore(mockBackingStore);
         const selector = await store.getStateSnapshotBySelector({
@@ -46,9 +47,9 @@ describe('store.getStateSnapshotBySelector()', () => {
 
     specify('items must match the results from the backing store', async () => {
       const mockBackingStore = {
-        commit() {},
-        discard() {},
-        select: async () => ({
+        commitChanges() {},
+        discardChanges() {},
+        selectItems: async () => ({
           results: {
             itemType: [
               { id: 1, test: 'selector' },
@@ -82,9 +83,9 @@ describe('store.getStateSnapshotBySelector()', () => {
         `resulting object must have method named ${requiredMethod}`,
         async () => {
           const mockBackingStore = {
-            commit() {},
-            discard() {},
-            select: sinon.stub().resolves({
+            commitChanges() {},
+            discardChanges() {},
+            selectItems: sinon.stub().resolves({
               results: {},
               meta: {},
             }),
