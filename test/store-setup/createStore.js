@@ -1,9 +1,33 @@
+const cloverleaf = require('../../index');
+const should = require('should');
+
 describe('cloverleaf.createStore()', () => {
-  it('should throw when backing store is omitted');
+  it('should throw when backing store is omitted', () => {
+    should.throws(() => cloverleaf.createStore());
+  });
 
   context('with backing store specified', () => {
-    specify('resulting object should have method registerReducer');
-    specify('resulting object should have method getCleanStateSnapshot');
-    specify('resulting object should have method getStateSnapshotBySelector');
+    class DummyBackingStore extends cloverleaf.BackingStore {
+      commit() {}
+      discard() {}
+      select() {}
+    }
+
+    let store;
+
+    before(() => {
+      store = cloverleaf.createStore(new DummyBackingStore());
+    });
+
+    [
+      'registerReducer',
+      'getCleanStateSnapshot',
+      'getStateSnapshotBySelector',
+    ].forEach(requiredMethod => {
+      specify(`resulting object should have method ${requiredMethod}`, () => {
+        store.should.have.property(requiredMethod);
+        store[requiredMethod].should.be.a.Function();
+      });
+    });
   });
 });
