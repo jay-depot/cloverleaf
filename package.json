@@ -33,41 +33,5 @@
     "should": "^13.2.3",
     "should-sinon": "0.0.6",
     "sinon": "^7.1.1"
-  },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "extends": [
-      "semistandard",
-      "plugin:prettier/recommended"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": "error",
-      "curly": [
-        "error",
-        "all"
-      ],
-      "brace-style": [
-        "error",
-        "1tbs",
-        {
-          "allowSingleLine": false
-        }
-      ]
-    },
-    "overrides": [
-      {
-        "files": [
-          "src/*.js",
-          "test/*.js",
-          "patches/*.js"
-        ]
-      }
-    ],
-    "env": {
-      "mocha": true
-    }
   }
 }
