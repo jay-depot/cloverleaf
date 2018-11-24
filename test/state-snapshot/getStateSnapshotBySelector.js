@@ -48,22 +48,26 @@ describe('store.getStateSnapshotBySelector()', () => {
       const mockBackingStore = {
         commit() {},
         discard() {},
-        select: async () => [
-          { id: 1, test: 'selector' },
-          { id: 2, test: 'selector' },
-          { id: 3, test: 'selector' },
-        ],
+        select: async () => ({
+          itemType: [
+            { id: 1, test: 'selector' },
+            { id: 2, test: 'selector' },
+            { id: 3, test: 'selector' },
+          ],
+        }),
       };
       const store = cloverleaf.createStore(mockBackingStore);
       const selector = await store.getStateSnapshotBySelector({
         test: 'selector',
       });
 
-      selector.items.should.deepEqual([
-        { id: 1, test: 'selector' },
-        { id: 2, test: 'selector' },
-        { id: 3, test: 'selector' },
-      ]);
+      selector.items.should.deepEqual({
+        itemType: [
+          { id: 1, test: 'selector' },
+          { id: 2, test: 'selector' },
+          { id: 3, test: 'selector' },
+        ],
+      });
     });
 
     [

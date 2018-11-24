@@ -1,14 +1,62 @@
-describe('stateSnapshot.dispatchToStateSnapshot()', () => {
-  it(
-    'should call the reducer function registered to the store that created the state snapshot'
-  );
-  it('should return a new state snapshot matching the output of the reducer');
-  it('should not chage the existing state snapshot');
+const cloverleaf = require('../../index');
+const sinon = require('sinon');
 
-  describe('the function called', () => {
-    specify('the first parameter should be a copy of the state snapshot');
-    specify(
-      'the second parameter should be the first parameter passed to dispatchToStateSnapshot'
+describe('stateSnapshot.dispatchToStateSnapshot()', () => {
+  it('should call the reducer function registered to the store that created the state snapshot', async () => {
+    const mockBackingStore = {
+      commit() {},
+      discard() {},
+      select: () => ({ itemType: [{ test: 'item' }] }),
+    };
+    const store = cloverleaf.createStore(mockBackingStore);
+    const fakeReducer = sinon.spy();
+    store.registerReducer(fakeReducer);
+    const snapshot = await store.getStateSnapshotBySelector({
+      test: 'selector',
+    });
+    await snapshot.dispatchToStateSnapshot({ test: 'action' });
+
+    fakeReducer.should.be.calledWith(
+      { itemType: [{ test: 'item' }] },
+      { test: 'action' }
     );
+  });
+
+  it('should return a new state snapshot matching the output of the reducer', async () => {
+    const mockBackingStore = {
+      commit() {},
+      discard() {},
+      select: () => ({ itemType: [{ test: 'item' }] }),
+    };
+    const store = cloverleaf.createStore(mockBackingStore);
+    const fakeReducer = (state, action) => action;
+    store.registerReducer(cloverleaf.createReducer(fakeReducer));
+    const snapshot = await store.getStateSnapshotBySelector({
+      test: 'selector',
+    });
+    const newSnapshot = await snapshot.dispatchToStateSnapshot({
+      reducer: 'reduced',
+    });
+
+    newSnapshot.items.should.deepEqual({ reducer: 'reduced' });
+  });
+
+  it('should not chage the existing state snapshot', async () => {
+    const mockBackingStore = {
+      commit() {},
+      discard() {},
+      select: () => ({ itemType: [{ test: 'item' }] }),
+    };
+    const store = cloverleaf.createStore(mockBackingStore);
+    const fakeReducer = (state, action) => action;
+    store.registerReducer(cloverleaf.createReducer(fakeReducer));
+    const oldSnapshot = await store.getStateSnapshotBySelector({
+      test: 'selector',
+    });
+    await oldSnapshot.dispatchToStateSnapshot({
+      reducer: 'reduced',
+    });
+
+    oldSnapshot.items.should.deepEqual({ itemType: [{ test: 'item' }] });
   });
 });
