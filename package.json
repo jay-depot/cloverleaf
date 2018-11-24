@@ -4,7 +4,7 @@
   "description": "Redux on the back-end... sort of. A model framework based on the Flux design pattern. Designed to work with Turnpike.",
   "main": "index.js",
   "scripts": {
-    "test": "eslint . && mocha"
+    "test": "eslint . && nyc mocha"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
     "prettier": "^1.15.2",
     "should": "^13.2.3",
     "should-sinon": "0.0.6",
