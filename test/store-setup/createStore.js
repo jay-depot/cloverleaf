@@ -8,9 +8,10 @@ describe('cloverleaf.createStore()', () => {
 
   context('with backing store specified', () => {
     class DummyBackingStore extends cloverleaf.BackingStore {
-      commit() {}
-      discard() {}
-      select() {}
+      commitChanges() {}
+      discardChanges() {}
+      newItems() {}
+      selectItems() {}
     }
 
     let store;
