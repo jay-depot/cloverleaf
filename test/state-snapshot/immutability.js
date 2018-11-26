@@ -31,7 +31,7 @@ describe('StateSnapshot immutability', () => {
     });
     snapshot.items.itemType.length.should.equal(1);
   });
-  
+
   it('should not allow direct addition of new properties to the internal items state', () => {
     snapshot.items.newItemType = { shouldNot: 'exist' };
     snapshot.items.should.not.have.property('newItemType');
