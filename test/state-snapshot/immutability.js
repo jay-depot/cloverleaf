@@ -31,9 +31,9 @@ describe('StateSnapshot immutability', () => {
     });
     snapshot.items.itemType.length.should.equal(1);
 
-    should.throws(() => {
-      snapshot.items.newItemType = { shouldNot: 'exist' };
-    });
+
+    snapshot.items.newItemType = { shouldNot: 'exist' };
+    snapshot.items.should.not.have.property('newItemType');
   });
 
   it('should not allow direct changes to existing data in the internal initialState', () => {
@@ -48,8 +48,7 @@ describe('StateSnapshot immutability', () => {
     });
     snapshot.initialState.itemType.length.should.equal(1);
 
-    should.throws(() => {
-      snapshot.initialState.newItemType = { shouldNot: 'exist' };
-    });
+    snapshot.initialState.newItemType = { shouldNot: 'exist' };
+    snapshot.items.should.not.have.property('newItemType');
   });
 });
