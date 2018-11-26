@@ -31,7 +31,6 @@ describe('StateSnapshot immutability', () => {
     });
     snapshot.items.itemType.length.should.equal(1);
 
-
     snapshot.items.newItemType = { shouldNot: 'exist' };
     snapshot.items.should.not.have.property('newItemType');
   });
