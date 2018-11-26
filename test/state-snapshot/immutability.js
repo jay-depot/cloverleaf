@@ -49,7 +49,7 @@ describe('StateSnapshot immutability', () => {
     snapshot.initialState.itemType.length.should.equal(1);
 
     should.throws(() => {
-      snapshot.initialState.newItemType = { shouldNot: 'exist' }
+      snapshot.initialState.newItemType = { shouldNot: 'exist' };
     });
   });
 });
