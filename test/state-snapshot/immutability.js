@@ -26,10 +26,14 @@ describe('StateSnapshot immutability', () => {
   });
 
   it('should not allow direct addition of new properties to the internal items state', () => {
-    should.throws(() => snapshot.items.itemType.push({ shouldNot: 'exist' }));
+    should.throws(() => {
+      snapshot.items.itemType.push({ shouldNot: 'exist' });
+    });
     snapshot.items.itemType.length.should.equal(1);
 
-    should.throws(() => snapshot.items.newItemType = { shouldNot: 'exist' });
+    should.throws(() => {
+      snapshot.items.newItemType = { shouldNot: 'exist' };
+    });
   });
 
   it('should not allow direct changes to existing data in the internal initialState', () => {
@@ -39,12 +43,13 @@ describe('StateSnapshot immutability', () => {
   });
 
   it('should not allow direct addition of new properties to the internal initialState', () => {
-    should.throws(() =>
-      snapshot.initialState.itemType.push({ shouldNot: 'exist' })
-    );
+    should.throws(() => {
+      snapshot.initialState.itemType.push({ shouldNot: 'exist' });
+    });
     snapshot.initialState.itemType.length.should.equal(1);
 
-    should.throws(() => 
-      snapshot.initialState.newItemType = { shouldNot: 'exist' });
+    should.throws(() => {
+      snapshot.initialState.newItemType = { shouldNot: 'exist' }
+    });
   });
 });
